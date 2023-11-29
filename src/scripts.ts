@@ -1,10 +1,6 @@
 import $ from 'jquery';
-import {
-  checkRegex,
-  usernameRegex,
-  emailRegex,
-  passwordRegex,
-} from './utils/checkRegex/checkRegex';
+import swal from 'sweetalert';
+import { checkRegex, usernameRegex, emailRegex, passwordRegex } from './utils/checkRegex/checkRegex';
 
 $('.form-wrapper').html(`
     <form class="form js-form">
@@ -27,21 +23,48 @@ $('.js-form').on('submit', (event) => {
   const checkPassword = checkRegex(passwordInput, passwordRegex);
 
   if (checkUserName && checkEmail && checkPassword) {
-    alert('Congratulations, account created!');
     $('.userName-input').val('');
     $('.email-input').val('');
     $('.password-input').val('');
+    swal({
+      title: 'Congratulations, account created!',
+      icon: 'success',
+    });
+  } else if (!checkUserName && !checkEmail) {
+    swal({
+      title: 'You entered a invalid username and email!',
+      text: 'Your username should be atleast 2 characters, max 50 characters and contain only letters and a e-mail should be written in this format - example@example.com',
+      icon: 'error',
+    });
+  } else if (!checkUserName && !checkPassword) {
+    swal({
+      title: 'You entered a invalid username and password!',
+      text: 'Your username should be atleast 2 characters, max 50 characters and contain only letters and a password should be atleast 8 characters and must contain atleast 1 number and 1 special character(!, @, #, $, %, ^, &, *)',
+      icon: 'error',
+    });
+  } else if (!checkEmail && !checkPassword) {
+    swal({
+      title: 'You entered a invalid e-mail and password!',
+      text: 'Your e-mail should be written in this format - example@example.com and a password should be atleast 8 characters and must contain atleast 1 number and 1 special character(!, @, #, $, %, ^, &, *)',
+      icon: 'error',
+    });
   } else if (!checkUserName) {
-    alert(
-      'You entered a invalid username! A username should be atleast 2 characters, max 50 characters and contain only letters'
-    );
+    swal({
+      title: 'You entered a invalid username!',
+      text: 'Your username should be atleast 2 characters, max 50 characters and contain only letters',
+      icon: 'error',
+    });
   } else if (!checkEmail) {
-    alert(
-      'You entered a invalid e-mail! It should be written in this format - example@example.com'
-    );
+    swal({
+      title: 'You entered a invalid e-mail!',
+      text: 'It should be written in this format - example@example.com',
+      icon: 'error',
+    });
   } else if (!checkPassword) {
-    alert(
-      'You entered a invalid password! A password should be atleast 8 characters and must contain atlest 1 number and 1 special character(!, @, #, $, %, ^, &, *)'
-    );
+    swal({
+      title: 'You entered a invalid password!',
+      text: 'Your password should be atleast 8 characters and must contain atleast 1 number and 1 special character(!, @, #, $, %, ^, &, *)',
+      icon: 'error',
+    });
   }
 });

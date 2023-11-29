@@ -1,11 +1,5 @@
-import {
-  checkRegex,
-  usernameRegex,
-  emailRegex,
-  passwordRegex,
-} from './checkRegex';
+import { checkRegex, usernameRegex, emailRegex, passwordRegex } from './checkRegex';
 
-// Checking if the username regex is working correctly
 describe('checkUserNameRegex', () => {
   it('should return true if username is 2 characters', () => {
     const result = checkRegex('ab', usernameRegex);
@@ -16,10 +10,7 @@ describe('checkUserNameRegex', () => {
 
 describe('checkUserNameRegex', () => {
   it('should return true if username is 50 characters', () => {
-    const result = checkRegex(
-      'qhwvjsylgtrbapdxcnouiefzkmaxqjthwsgcbnlodyvrukpefa',
-      usernameRegex
-    );
+    const result = checkRegex('qhwvjsylgtrbapdxcnouiefzkmaxqjthwsgcbnlodyvrukpefa', usernameRegex);
 
     expect(result).toEqual(true);
   });
@@ -35,10 +26,7 @@ describe('checkUserNameRegex', () => {
 
 describe('checkUserNameRegex', () => {
   it('should return false if username is longer than 50 characters', () => {
-    const result = checkRegex(
-      'qhwvjsylgtrbapdxcnouiefzkmaxqjthwsgcbnlodyvrukpefaqix',
-      usernameRegex
-    );
+    const result = checkRegex('qhwvjsylgtrbapdxcnouiefzkmaxqjthwsgcbnlodyvrukpefaqix', usernameRegex);
 
     expect(result).toEqual(false);
   });
@@ -60,7 +48,6 @@ describe('checkUserNameRegex', () => {
   });
 });
 
-// Checking if the email regex is working correctly
 describe('checkEmailRegex', () => {
   it('should return true if the email format is valid', () => {
     const result = checkRegex('aldis@codelex.lv', emailRegex);
@@ -85,7 +72,6 @@ describe('checkEmailRegex', () => {
   });
 });
 
-// Checking if the password regex is working correctly
 describe('checkPasswordRegex', () => {
   it('should return true if the password is atleast 8 characters, contains atleast 1 number and 1 special character', () => {
     const result = checkRegex('ald!s12345', passwordRegex);
