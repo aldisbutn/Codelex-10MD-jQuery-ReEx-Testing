@@ -1,6 +1,14 @@
 import $ from 'jquery';
 import swal from 'sweetalert';
+import axios from 'axios';
 import { checkRegex, usernameRegex, emailRegex, passwordRegex } from './utils/checkRegex/checkRegex';
+
+type User = {
+  id: number;
+  userName: string;
+  email: string;
+  password: string;
+};
 
 $('.form-wrapper').html(`
     <form class="form js-form">
@@ -11,21 +19,32 @@ $('.form-wrapper').html(`
     </form>
 `);
 
+const handleRegister = () => {
+  const userNameInput = $('.userName-input').val() as string;
+  const emailInput = $('.email-input').val() as string;
+  const passwordInput = $('.password-input').val() as string;
+
+  axios.post<User>('http://localhost:3004/users', {
+    userName: userNameInput,
+    email: emailInput,
+    password: passwordInput
+  })
+}
+
 $('.js-form').on('submit', (event) => {
   event.preventDefault();
 
-  const userNameInput = String($('.userName-input').val());
-  const emailInput = String($('.email-input').val());
-  const passwordInput = String($('.password-input').val());
+  const userNameInput = $('.userName-input').val() as string;
+  const emailInput = $('.email-input').val() as string;
+  const passwordInput = $('.password-input').val() as string;
 
   const checkUserName = checkRegex(userNameInput, usernameRegex);
   const checkEmail = checkRegex(emailInput, emailRegex);
   const checkPassword = checkRegex(passwordInput, passwordRegex);
 
   if (checkUserName && checkEmail && checkPassword) {
-    $('.userName-input').val('');
-    $('.email-input').val('');
-    $('.password-input').val('');
+    handleRegister();
+    $('.userName-input, .email-input, .password-input').val('');
     swal({
       title: 'Congratulations, account created!',
       icon: 'success',
