@@ -10,6 +10,8 @@ type User = {
   password: string;
 };
 
+
+// Create the form 
 $('.form-wrapper').html(`
     <form class="form js-form">
         <input required type="text" name="userName" placeholder="Username" class="userName-input">
@@ -19,6 +21,7 @@ $('.form-wrapper').html(`
     </form>
 `);
 
+// Save the user data to the db if the login info is valid
 const handleRegister = () => {
   const userNameInput = $('.userName-input').val() as string;
   const emailInput = $('.email-input').val() as string;
@@ -31,17 +34,21 @@ const handleRegister = () => {
   })
 }
 
+// Check if the user info is valid and return a success message or a error message
 $('.js-form').on('submit', (event) => {
   event.preventDefault();
 
+  // Get the user inputed data
   const userNameInput = $('.userName-input').val() as string;
   const emailInput = $('.email-input').val() as string;
   const passwordInput = $('.password-input').val() as string;
 
+  // Check if the user inputed data is valid
   const checkUserName = checkRegex(userNameInput, usernameRegex);
   const checkEmail = checkRegex(emailInput, emailRegex);
   const checkPassword = checkRegex(passwordInput, passwordRegex);
 
+  // If the data is valid then save the user in the db, clear the form and display an success message
   if (checkUserName && checkEmail && checkPassword) {
     handleRegister();
     $('.userName-input, .email-input, .password-input').val('');
@@ -49,6 +56,7 @@ $('.js-form').on('submit', (event) => {
       title: 'Congratulations, account created!',
       icon: 'success',
     });
+  // If the data isnt valid then show an error message
   } else if (!checkUserName && !checkEmail) {
     swal({
       title: 'You entered a invalid username and email!',
